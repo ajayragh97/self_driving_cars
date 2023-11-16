@@ -1,7 +1,7 @@
 # Parameters
 
 # trajectory to follow
-waypoints_file: ./results/recorded_trajectory3.txt
+waypoints_file: ./results/recorded_trajectory.txt
 
 # Sampling Time
 sampling_time: 0.05
@@ -24,8 +24,8 @@ control:
 
     # TODO Tune these parameters
     pid:
-      K_P: 0.2
-      K_D: 0.2
+      K_P: 0.5
+      K_D: 0.25
       K_I: 0.0
 
   # Lateral controller
@@ -39,8 +39,8 @@ control:
     
     # TODO Tune these parameters
     pure-pursuit:
-     ld: 0
-     K_pp: 0.2
+     ld: 5
+     K_pp: 0.5
     
     # TODO Tune this parameter
     stanley:

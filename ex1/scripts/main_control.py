@@ -35,7 +35,7 @@ if __name__ == "__main__":
         os.mkdir("results")
 
     trajectory = []
-    trajectory_file = open("results/tracked_trajectory3.txt", "w")
+    trajectory_file = open("results/tracked_trajectory.txt", "w")
 
     try:
         # Common setup

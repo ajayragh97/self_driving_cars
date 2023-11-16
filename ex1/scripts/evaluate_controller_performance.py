@@ -75,14 +75,14 @@ if __name__ == "__main__":
     argparser.add_argument(
         "-r",
         "--ref-traj",
-        default="results/recorded_trajectory2.txt",
+        default="results/recorded_trajectory.txt",
         dest="ref_traj",
         help="Path to reference trajectory file.",
     )
     argparser.add_argument(
         "-t",
         "--tracked-traj",
-        default="results/tracked_trajectory3.txt",
+        default="results/tracked_trajectory.txt",
         dest="tracked_traj",
         help="Path to tracked trajectory file.",
     )

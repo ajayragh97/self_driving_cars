@@ -38,7 +38,7 @@ class PurePursuitLateralController:
         return 1
 
     def _pure_pursuit_control(self, waypoints, vehicle_transform):
-             """
+        """
         :param waypoint: list of waypoints
         :param vehicle_transform: current transform of the vehicle
         :return: steering control
@@ -47,34 +47,23 @@ class PurePursuitLateralController:
         #######################################################################
         ################## TODO: IMPLEMENT PURE-PURSUIT CONTROL HERE ##########
         #######################################################################
-        velocity            = get_velocity_kmph(self._vehicle) # velocity of vehicle in m/s
-        print(f"velocity: {velocity}")
-
-        ld            = self._k_pp * velocity # lookahead distance in meters
-        # ld = self._ld
-        if(ld == 0):
-            ld = self._ld
-        print(f"ld: {ld}")
-
-        goal_waypoint_index = self._get_goal_waypoint_index(self._vehicle, waypoints, ld)
+        velocity            = get_velocity_ms(self._vehicle) # velocity of vehicle in m/s
+        
+        self._ld            = self._k_pp * velocity # lookahead distance in meters
+        goal_waypoint_index = self._get_goal_waypoint_index(self._vehicle, waypoints, self._ld)
         goal_waypoint       = waypoints[goal_waypoint_index]
         
         # calculating the angle alpha between vehicle's body heading and the look ahead line 
         x_offset = goal_waypoint[0] - vehicle_transform.location.x
         y_offset = goal_waypoint[1] - vehicle_transform.location.y
         
+        alpha = np.arctan(y_offset/x_offset) - vehicle_transform.rotation.yaw
         
-
-        alpha = np.arctan2(y_offset,x_offset) - np.radians(vehicle_transform.rotation.yaw)
-        
-        # print(f"yaw: {vehicle_transform.rotation.yaw}")
-
         if alpha > np.pi/2:
             alpha -= np.pi
         if alpha < - np.pi/2:
             alpha += np.pi
-
-
-        steering = np.arctan((2 * self._L * np.sin(alpha)) / ld)
-        # print(f"steering_orig: {steering}")
+            
+        steering = np.arctan((2 * self._L * np.sin(alpha)) / self._ld) 
+        
         return steering

@@ -1,6 +1,6 @@
+carla
+matplotlib
 numpy
+pyYAML
 pygame
 pytest
-pyYAML
-matplotlib
-carla
