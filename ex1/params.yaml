@@ -12,7 +12,7 @@ model:
 # Controller related parameters
 control:
 
-  strategy: pure-pursuit # pid/pure-pursuit/stanley/mpc (strategy for LATERAL ; for LONGITUDINAL it is PID always anyways)
+  strategy: mpc # pid/pure-pursuit/stanley/mpc (strategy for LATERAL ; for LONGITUDINAL it is PID always anyways)
  
   # Actuation 
   max_throttle: 0.75
@@ -40,7 +40,7 @@ control:
     # TODO Tune these parameters
     pure-pursuit:
      ld: 5
-     K_pp: 0.5
+     K_pp: 2.5
     
     # TODO Tune this parameter
     stanley:

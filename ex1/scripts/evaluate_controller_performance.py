@@ -17,7 +17,7 @@ def plot_trajectory_comparison(reference_trajectory, tracked_trajectory):
     plt.plot(tracked_trajectory_np[:, 0], tracked_trajectory_np[:, 1], "--g", label="Tracked")
     ax1.set_xlabel("x")
     ax1.set_ylabel("y")
-    ax1.set_box_aspect(1)
+    # ax1.set_box_aspect(1)
     ax1.legend()
 
     # Distances of reference trajectory
@@ -34,7 +34,7 @@ def plot_trajectory_comparison(reference_trajectory, tracked_trajectory):
     plt.plot(cum_dist_track, tracked_trajectory_np[:, 2], "--g", label="Tracked")
     ax2.set_xlabel("Normalized trajectory length")
     ax2.set_ylabel("Velocity")
-    ax2.set_box_aspect(1)
+    # ax2.set_box_aspect(1)
     ax2.legend()
     plt.show()
 
