@@ -55,7 +55,6 @@ def test_task_3():
 
     purepursuit = PurePursuitLateralController(vehicle, 9.3, 3.4, 39.2)
     steering = purepursuit.run_step(waypoints)
-    print(steering.dtype)
     assert steering != 0.0
     assert math.isclose(
         steering, 0.01709177472245794, rel_tol=1e-4
