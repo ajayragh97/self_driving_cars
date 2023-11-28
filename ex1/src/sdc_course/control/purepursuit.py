@@ -48,17 +48,15 @@ class PurePursuitLateralController:
         ################## TODO: IMPLEMENT PURE-PURSUIT CONTROL HERE ##########
         #######################################################################
         velocity            = get_velocity_ms(self._vehicle) # velocity of vehicle in m/s
-        print(f"velocity: {velocity}")
 
         ld            = self._k_pp * velocity # lookahead distance in meters
         if(ld == 0):
             ld = self._ld
-        print(f"ld: {ld}")
+
 
         goal_waypoint_index = self._get_goal_waypoint_index(self._vehicle, waypoints, ld)
         goal_waypoint       = waypoints[goal_waypoint_index]
         
-        print(f"goal waypoint: {goal_waypoint}")
         # calculating the angle alpha between vehicle's body heading and the look ahead line 
         x_offset = goal_waypoint[0] - vehicle_transform.location.x
         y_offset = goal_waypoint[1] - vehicle_transform.location.y
@@ -66,8 +64,6 @@ class PurePursuitLateralController:
         
 
         alpha = np.arctan(y_offset / x_offset) - np.radians(vehicle_transform.rotation.yaw)
-        
-        # print(f"yaw: {vehicle_transform.rotation.yaw}")
 
         if alpha > np.pi/2:
             alpha -= np.pi
@@ -76,5 +72,5 @@ class PurePursuitLateralController:
 
 
         steering = np.arctan((2 * self._L * np.sin(alpha)) / ld)
-        print(f"steering_orig: {steering}")
+
         return steering
