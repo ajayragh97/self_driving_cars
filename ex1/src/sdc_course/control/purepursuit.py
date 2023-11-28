@@ -64,13 +64,12 @@ class PurePursuitLateralController:
         
 
         alpha = np.arctan(y_offset / x_offset) - np.radians(vehicle_transform.rotation.yaw)
-
+        
         if alpha > np.pi/2:
             alpha -= np.pi
         if alpha < - np.pi/2:
             alpha += np.pi
 
-
         steering = np.arctan((2 * self._L * np.sin(alpha)) / ld)
-
+        
         return steering
