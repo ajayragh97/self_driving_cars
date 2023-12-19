@@ -53,6 +53,7 @@ class PurePursuitLateralController:
         if(ld == 0):
             ld = self._ld
 
+
         goal_waypoint_index = self._get_goal_waypoint_index(self._vehicle, waypoints, ld)
         goal_waypoint       = waypoints[goal_waypoint_index]
         
