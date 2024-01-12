@@ -54,5 +54,5 @@ planning:
 
   start: [6.1, 184.3, 1.0]
   end: [19.2, -197.0, 0.0] 
-  scenario: "scenario1"
+  scenario: "scenario2"
     
