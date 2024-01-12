@@ -47,3 +47,4 @@ src/sdc_course/utils/car.py
 src/sdc_course/utils/utility.py
 src/sdc_course/utils/window.py
 src/sdc_course/utils/world.py
+tests/test_planning.py
