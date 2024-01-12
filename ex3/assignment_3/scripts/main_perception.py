@@ -84,9 +84,16 @@ if __name__ == "__main__":
                 # Determine distance from depth image and update traffic_sign_map with detection.
                 # Hint: See https://carla.readthedocs.io/en/latest/ref_sensors/#depth-camera
                 img_depth = vehicle.get_sensor_data()["depth"]
-
-                distance_meters = 0
-                point_world = None
+                
+                # location of detection in pixel coordinates
+                x,y = detection.x, detection.y
+                # calculating the real depth at that point
+                R = img_depth[x, y, 0]
+                G = img_depth[x, y, 1]
+                B = img_depth[x, y, 2] 
+                depth = (R + G * 256 + B * 256 * 256) / (256 * 256 * 256 - 1)
+                distance_meters = 1000 * depth
+                point_world = image_to_world(world, detection, distance_meters)
 
 
                 if point_world is None:
