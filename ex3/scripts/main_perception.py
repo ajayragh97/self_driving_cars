@@ -87,13 +87,14 @@ if __name__ == "__main__":
                 
                 # location of detection in pixel coordinates
                 x,y = detection.x, detection.y
+                point = (x, y)
                 # calculating the real depth at that point
-                R = img_depth[x, y, 0]
-                G = img_depth[x, y, 1]
-                B = img_depth[x, y, 2] 
+                R = img_depth[y, x, 0]
+                G = img_depth[y, x, 1]
+                B = img_depth[y, x, 2] 
                 depth = (R + G * 256 + B * 256 * 256) / (256 * 256 * 256 - 1)
                 distance_meters = 1000 * depth
-                point_world = image_to_world(world, detection, distance_meters)
+                point_world = image_to_world(world, point, distance_meters)
 
 
                 if point_world is None:
@@ -144,11 +145,12 @@ if __name__ == "__main__":
                 ######################### TODO: IMPLEMENT THIS ########################
                 #######################################################################
                 # TODO: draw all detection using pane.add_bounding_box
-                # TODO: output text.
+                # TODO: output text.x, y
                 for detection in sign_detections:
-                    if(detection.confidence > confidence_threshold):
-                        pane.add_bounding_box(detection.x, detection.y, detection.width, detection.height)
-                        pane.add_text(f"{detection.category}: {detection.confidence}")
+                    # print(f"category: {detection.category}, confidence: {detection.confidence}")
+                    # if(detection.confidence > confidence_threshold):
+                    pane.add_bounding_box(detection.x, detection.y, detection.width, detection.height)
+                    pane.add_text(f"{detection.category}: {detection.confidence}")
 
             window.update()
 

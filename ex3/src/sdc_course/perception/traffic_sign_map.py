@@ -31,6 +31,43 @@ class TrafficSignMap:
         ######################### TODO: IMPLEMENT THIS ########################
         #######################################################################
         ## TODO: add logic to update the map with with 2D location. Initialize traffic sign location if needed.
+        curr_distribution = traffic_sign.distribution
+        new_confidence = confidence
+        curr_category = traffic_sign.category
+        observed_category = sign_type
+        max_distance = 0.2
+        if sign_type in CATEGORIES:
+            # calculating the new distribution
+            new_distribution = np.ones_like(curr_distribution) * ((1 - new_confidence)/ (len(CATEGORIES)- 1))
+            new_distribution[CATEGORIES.index(sign_type)] = confidence
+
+            traffic_sign.distribution = traffic_sign.distribution * new_distribution
+            
+            # calclating the new position as the average of previous and current position
+            if traffic_sign.category == "none":
+                traffic_sign.position = position
+            else:
+                traffic_sign.position = (traffic_sign.position + position)/2
+
+            # setting new category as the category with highest confidence 
+            new_category = CATEGORIES[np.argmax(new_distribution)]
+            traffic_sign.category = new_category
+
+            # Updating the corresponding traffic sign in the map
+            sqr_closest_distance = max_distance * max_distance
+            closest_idx = None
+            for idx, entry in enumerate(self._map):
+                sqr_distance = np.dot(position - entry.position, position - entry.position)
+                if sqr_distance < sqr_closest_distance:
+                    sqr_closest_distance = sqr_distance
+                    closest_idx = idx
+            
+            if closest_idx == None:
+                self._map.append(traffic_sign)
+            else:
+                self._map[closest_idx] = traffic_sign
+
+
 
     def get_closest_sign(
         self, position: Union[np.array, Tuple[float, float]], max_distance: float = 5.0

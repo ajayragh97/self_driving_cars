@@ -167,6 +167,21 @@ class GlobalPlanner:
         #######################################################################
         ## Use the traffic sign information to modify the graph appropriately.
         ## Hint: There are new methods available: _find_closest_edge_nodes, _get_adjacent_edges.
+        sign_splits = traffic_sign_type.split("_")
+        
+        if(sign_splits[0] == "left" or sign_splits[0] == "right"):
+            from_node, to_node = _find_closest_edge_nodes(location)
+            adjacent_edges = _get_adjacent_edges(from_node, to_node)
+
+            if(sign_splits[0] == "left"):
+                to_node, next_child_node = adjacent_edges["left"]
+                
+
+
+        else if (sign_splits[0] == "max"):
+            limit = speed_limit[traffic_sign_type]
+            from_node, to_node = _find_closest_edge_nodes(location)
+            _update_speed_limit(from_node, to_node, limit)
 
     def _update_edge_cost(self, from_node, to_node, new_cost):
         self.graph.edges[(from_node, to_node)]["cost"] = new_cost

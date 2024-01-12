@@ -80,8 +80,34 @@ def image_to_world(world, point: np.array, distance: float) -> np.array:
           2. Projecting a point [x, y, z, 1] uses: s * [u, v, 1] = K * T_cam_from_world * [x, y, z, 1].
     """
     point_world = np.array([0, 0, 0])
+    # print(point_world.shape)
     #######################################################################
     ######################### TODO: IMPLEMENT THIS ########################
     #######################################################################
+    vehicle = world.get_vehicle()
+    camera = vehicle.get_camera()
+    camera_calib = camera.calibration
+    cam_transform = transform_to_numpy(camera.get_transform())
+
+    # transform point from image to camera coordinates
+    k_inv = np.linalg.inv(camera_calib)
+    point_homo = np.ones((3,1))
+    point_homo[0, 0] = point[0]
+    point_homo[1, 0] = point[1]
+    point_camera = (k_inv @ point_homo) * distance 
+    # converting the point in camera fram from the camera coordinate system to unreal engine world coordinate system
+    point_camera_world = np.zeros_like(point_camera)
+    point_camera_world[0, 0] = point_camera[2, 0]
+    point_camera_world[1, 0] = point_camera[0, 0]
+    point_camera_world[2, 0] = -point_camera[1, 0]
+
+    # transforming the point into unreal engine world coordinates using the camera transform from camera to world
+    point_world_homo = np.ones((4, 1))
+    point_world_homo[0:3, 0] = point_camera_world[:, 0]
+
+    point_world = cam_transform @ point_world_homo
+
+    point_world = np.squeeze(point_world)
+
     
     return point_world
