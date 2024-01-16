@@ -147,6 +147,7 @@ if __name__ == "__main__":
                 #######################################################################
                 # TODO: draw all detection using pane.add_bounding_box
                 # TODO: output text.x, y
+                # NOTE: The confidence threshold was reduced since the glbal planner was not getting executed when the threshold was 0.95
                 for detection in sign_detections:
                     # print(f"category: {detection.category}, confidence: {detection.confidence}")
                     # if(detection.confidence > confidence_threshold):
