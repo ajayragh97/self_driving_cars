@@ -41,8 +41,8 @@ class TrafficSignMap:
             new_distribution = np.ones_like(curr_distribution) * ((1 - new_confidence)/ (len(CATEGORIES)- 1))
             new_distribution[CATEGORIES.index(sign_type)] = confidence
 
-            traffic_sign.distribution = traffic_sign.distribution * new_distribution
-            
+            traffic_sign.distribution =  new_distribution
+            # print(f"new_distribution: {traffic_sign.distribution}")
             # calclating the new position as the average of previous and current position
             if traffic_sign.category == "none":
                 traffic_sign.position = position

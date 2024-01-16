@@ -44,7 +44,7 @@ if __name__ == "__main__":
     traffic_sign_map = TrafficSignMap()
 
     # threshold for a stabilized traffic sign in the traffic_sign_map
-    confidence_threshold = 0.95
+    confidence_threshold = 0.7
 
     debug = world.get_debug_helper()
 
@@ -106,10 +106,11 @@ if __name__ == "__main__":
 
             # 3. update planner for each confident traffic sign.
             for traffic_sign in traffic_sign_map.get_traffic_signs():
+                
                 if np.max(traffic_sign.distribution) > confidence_threshold:
                     if traffic_sign.integrated:
                         continue
-
+                    
                     global_planner.integrate_traffic_sign(
                         traffic_sign.position, traffic_sign.category
                     )

@@ -170,18 +170,23 @@ class GlobalPlanner:
         sign_splits = traffic_sign_type.split("_")
         
         if(sign_splits[0] == "left" or sign_splits[0] == "right"):
-            from_node, to_node = _find_closest_edge_nodes(location)
-            adjacent_edges = _get_adjacent_edges(from_node, to_node)
+            from_node, to_node = self._find_closest_edge_nodes(location)
+            adjacent_edges = self._get_adjacent_edges(from_node, to_node)
 
             if(sign_splits[0] == "left"):
-                to_node, next_child_node = adjacent_edges["left"]
-                
-
-
-        else if (sign_splits[0] == "max"):
+                # this means that we cant turn right or go straight hence we will have to increase the cost of these turns
+                for edge in adjacent_edges["right"]+adjacent_edges["straight"]:
+                    self._update_edge_cost(edge[0], edge[1], np.inf)
+                    print("graph update left")
+            elif(sign_splits[0] == "right"):
+                for edge in adjacent_edges["left"]+adjacent_edges["straight"]:
+                    self._update_edge_cost(edge[0], edge[1], np.inf)
+                    print("graph update right")
+        elif (sign_splits[0] == "max"):
             limit = speed_limit[traffic_sign_type]
-            from_node, to_node = _find_closest_edge_nodes(location)
-            _update_speed_limit(from_node, to_node, limit)
+            from_node, to_node = self._find_closest_edge_nodes(location)
+            self._update_speed_limit(from_node, to_node, limit)
+            print("graph update speed")
 
     def _update_edge_cost(self, from_node, to_node, new_cost):
         self.graph.edges[(from_node, to_node)]["cost"] = new_cost
